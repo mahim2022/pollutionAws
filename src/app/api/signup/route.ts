@@ -1,13 +1,14 @@
+// app/api/users/route.ts
 import { NextResponse } from "next/server";
 import pool from "@/lib/db";
 import bcrypt from "bcrypt";
 
-// Create table if not exists
+// Ensure users table exists
 async function ensureUsersTable() {
   await pool.query(`
     CREATE TABLE IF NOT EXISTS users (
       id SERIAL PRIMARY KEY,
-      username VARCHAR(100) UNIQUE NOT NULL,
+      email VARCHAR(100) UNIQUE NOT NULL,
       password TEXT NOT NULL,
       created_at TIMESTAMP DEFAULT NOW()
     );
@@ -16,39 +17,43 @@ async function ensureUsersTable() {
 
 export async function POST(req: Request) {
   try {
-    const { username, password } = await req.json();
+    const { email, password } = await req.json();
 
-    if (!username || !password) {
+    if (!email || !password) {
       return NextResponse.json(
-        { success: false, error: "Username and password are required" },
+        { success: false, error: "Email and password are required" },
         { status: 400 }
       );
     }
 
-    // Ensure users table exists
+    // Ensure table exists
     await ensureUsersTable();
 
-    // Check if username already exists
-    const existing = await pool.query("SELECT * FROM users WHERE username = $1", [username]);
-    if (existing.rows.length > 0) {
+    // Use SELECT 1 instead of SELECT * for faster check
+    const { rows } = await pool.query(
+      "SELECT 1 FROM users WHERE email = $1 LIMIT 1",
+      [email]
+    );
+
+    if (rows.length > 0) {
       return NextResponse.json(
-        { success: false, error: "Username already exists" },
+        { success: false, error: "Email already exists" },
         { status: 409 }
       );
     }
 
-    // Hash password
+    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Insert new user
-    const result = await pool.query(
-      "INSERT INTO users (username, password) VALUES ($1, $2) RETURNING id, username, created_at",
-      [username, hashedPassword]
+    const { rows: insertedRows } = await pool.query(
+      "INSERT INTO users (email, password) VALUES ($1, $2) RETURNING id, email, created_at",
+      [email, hashedPassword]
     );
 
-    return NextResponse.json({ success: true, user: result.rows[0] });
+    return NextResponse.json({ success: true, user: insertedRows[0] });
   } catch (err) {
-    console.error("Error creating user:", err);
+    console.error("Error in POST /api/users:", err);
     return NextResponse.json(
       { success: false, error: "Internal server error" },
       { status: 500 }

@@ -6,17 +6,25 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     // console.log("Login attempt:", { email, password });
     // TODO: Replace with real login logic (Firebase/Auth API)
     await fetch("/api/signup/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: "alice", password: "mypassword123" }),
+      body: JSON.stringify({ email, password}),
 });
 
   };
+
+  const handleLogin = async (e: React.MouseEvent) => {
+    e.preventDefault();
+     await fetch("/api/signin/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password}),
+});}
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-base-200">
@@ -24,7 +32,7 @@ export default function LoginPage() {
         <div className="card-body">
           <h2 className="card-title justify-center text-2xl">Login</h2>
 
-          <form onSubmit={handleLogin} className="flex flex-col gap-4">
+          <form onSubmit={handleSignUp} className="flex flex-col gap-4">
             {/* Email */}
             <input
               type="email"
@@ -46,8 +54,11 @@ export default function LoginPage() {
             />
 
             {/* Button */}
-            <button type="submit" className="btn btn-primary w-full">
+            <button onClick={handleLogin} className="btn btn-primary w-full">
               Login
+            </button>
+            <button type="submit" className="btn btn-primary w-full">
+              Signup
             </button>
           </form>
 

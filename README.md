@@ -216,3 +216,42 @@ PGPORT=5432
 PGUSER=<DB_USERNAME>
 PGPASSWORD=<DB_PASSWORD>
 PGDATABASE=<DB_NAME>
+
+
+
+psql schema creation:
+
+ CREATE TABLE IF NOT EXISTS users (
+      id SERIAL PRIMARY KEY,
+      email VARCHAR(100) UNIQUE NOT NULL,
+      password TEXT NOT NULL,
+      created_at TIMESTAMP DEFAULT NOW()
+    );
+
+ CREATE TABLE IF NOT EXISTS blog_posts (
+      id SERIAL PRIMARY KEY,
+      title VARCHAR(255) UNIQUE NOT NULL,
+      content TEXT NOT NULL,
+      created_at TIMESTAMP DEFAULT NOW()
+    );
+    
+INSERT INTO blog_posts (title, content)
+VALUES (
+  'Deforestation',
+  'Deforestation is the large-scale removal of forests, often for agriculture, logging, or urban expansion. It causes habitat loss, soil erosion, and contributes to global warming.'
+)
+ON CONFLICT (title) DO NOTHING;
+
+INSERT INTO blog_posts (title, content)
+VALUES (
+  'Water Pollution',
+  'Water pollution occurs when harmful substances contaminate rivers, lakes, oceans, or groundwater. It impacts aquatic life and human communities.'
+)
+ON CONFLICT (title) DO NOTHING;
+
+INSERT INTO blog_posts (title, content)
+VALUES (
+  'Air Pollution',
+  'Air pollution is caused by harmful gases and particles released into the atmosphere, affecting health and the environment.'
+)
+ON CONFLICT (title) DO NOTHING;

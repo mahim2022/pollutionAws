@@ -10,7 +10,7 @@ export default function LoginPage() {
     e.preventDefault();
     // console.log("Login attempt:", { email, password });
     // TODO: Replace with real login logic (Firebase/Auth API)
-    await fetch("/api/users", {
+    await fetch("/api/signup/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email: "alice", password: "mypassword123" }),

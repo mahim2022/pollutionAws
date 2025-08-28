@@ -1,11 +1,16 @@
 "use client";
 import React from "react";
 import Link from "next/link";
+import Layout from "@/components/Layout";
+import { useRouter } from "next/navigation";
 
 export default function BlogPage() {
+  const router = useRouter();
+
   return (
-    <div className="min-h-screen bg-base-200">
-      {/* Navbar */}
+    <Layout>
+    {/* <div className="min-h-screen bg-base-200">
+      Navbar
       <div className="navbar bg-base-100 shadow-md">
         <div className="flex-1">
           <Link href="/" className="btn btn-ghost normal-case text-xl">
@@ -20,7 +25,7 @@ export default function BlogPage() {
             <li><Link href="/login">Login</Link></li>
           </ul>
         </div>
-      </div>
+      </div> */}
 
       {/* Hero Section */}
       <div className="hero bg-base-200 py-10">
@@ -50,7 +55,7 @@ export default function BlogPage() {
               reduce it.
             </p>
             <div className="card-actions justify-end">
-              <Link href="/blog/air-pollution" className="btn btn-primary">
+              <Link href="/air-pollution" className="btn btn-primary">
                 Read More
               </Link>
             </div>
@@ -67,7 +72,7 @@ export default function BlogPage() {
               Explore the causes of water contamination and its global effects.
             </p>
             <div className="card-actions justify-end">
-              <Link href="/blog/water-pollution" className="btn btn-primary">
+              <Link href="/water-pollution" className="btn btn-primary">
                 Read More
               </Link>
             </div>
@@ -85,7 +90,7 @@ export default function BlogPage() {
               pollution.
             </p>
             <div className="card-actions justify-end">
-              <Link href="/blog/deforestation" className="btn btn-primary">
+              <Link href="/deforestation" className="btn btn-primary">
                 Read More
               </Link>
             </div>
@@ -93,12 +98,13 @@ export default function BlogPage() {
         </div>
       </div>
 
-      {/* Footer */}
+      {/* Footer
       <footer className="footer footer-center p-6 bg-base-300 text-base-content mt-10">
         <aside>
           <p>© {new Date().getFullYear()} Pollution Blog. All rights reserved.</p>
         </aside>
       </footer>
-    </div>
+    </div> */}
+    </Layout>
   );
 }

@@ -204,10 +204,13 @@ connecting rds psql through ec2 instance though ssh
 
 chmod 400 key.pem
 ssh -i path/to/key.pem -L 5432:<RDS_ENDPOINT>:5432 ubuntu@<EC2_PUBLIC_IP>
+ssh -i pollution1.pem -L 6543:pollutiondb.c9yemoc2c05f.us-east-1.rds.amazonaws.com:5432 ubuntu@98.85.228.29
+
+can change the port to "6543" if the local port is busy
 
 now this will be connected to the localmachine 5432 port can we can access the db from local machine
 
-In .env.local:
+In .env.local: for accesing from the local machine
 PGHOST=localhost
 PGPORT=5432
 PGUSER=<DB_USERNAME>

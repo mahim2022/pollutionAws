@@ -86,8 +86,7 @@ sudo apt install -y nodejs
 sudo apt install -y postgresql-client
 
 # Install PM2 (for running Node apps in background)
-sudo npm install -g pm2
-
+sudo apt install npm
 
 Check versions:
 
@@ -102,9 +101,6 @@ git clone https://github.com/<your-repo>.git
 cd <your-repo>
 
 
-Option B – upload via scp:
-
-scp -i your-key.pem -r ./pollution-app ubuntu@<EC2_PUBLIC_IP>:/home/ubuntu/
 
 🛠 Step 5: Configure environment variables
 

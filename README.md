@@ -203,7 +203,7 @@ pm2 restart all
 connecting rds psql through ec2 instance though ssh
 
 chmod 400 key.pem
-ssh -i path/to/key.pem -L 5432:<RDS_ENDPOINT>:5432 ec2-user@<EC2_PUBLIC_IP>
+ssh -i path/to/key.pem -L 5432:<RDS_ENDPOINT>:5432 ubuntu@<EC2_PUBLIC_IP>
 
 now this will be connected to the localmachine 5432 port can we can access the db from local machine
 

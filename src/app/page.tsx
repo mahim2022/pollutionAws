@@ -1,8 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+
 
 export default function LoginPage() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -20,11 +23,21 @@ export default function LoginPage() {
 
   const handleLogin = async (e: React.MouseEvent) => {
     e.preventDefault();
-     await fetch("/api/signin/", {
+     const res=await fetch("/api/signin/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password}),
-});}
+});
+    const data=await res.json();
+    if(data.success){
+      console.log("Login successful:", data);
+      router.push("/homepage"); // Redirect to homepage or dashboard
+    }else{
+      console.error("Login failed:", data.error);
+      alert("Login failed: " + data.error);
+    }
+
+}
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-base-200">

@@ -40,7 +40,8 @@ export async function POST(req: Request) {
     // Remove password before returning user data
     delete user.password;
 
-    return NextResponse.json({ success: true, user });
+    // return NextResponse.json({ success: true, user });
+    return NextResponse.json({ success: true, user: { id: user.id, email: user.email } });
   } catch (err) {
     console.error("Error signing in:", err);
     return NextResponse.json(
